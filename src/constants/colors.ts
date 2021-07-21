@@ -1,0 +1,11 @@
+export const burntSienna = '#ee6a68';
+export const frolly = '#f379a2';
+export const amethyst = '#9170cb';
+export const malibu = '#5eb3f6';
+export const turquoiseBlue = '#67d7e5';
+export const salomie = '#ffe083';
+export const mercury = '#E8E8E8';
+export const alabaster = '#F8F7F7';
+export const aquaForest = '#64AA84';
+export const darkGray = '#505050';
+export const lightGray = '#a09f9f';

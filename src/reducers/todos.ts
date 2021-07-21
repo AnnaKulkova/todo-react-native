@@ -1,4 +1,9 @@
-import { ADD_TODO, TOGGLE_TODO, DELETE_TODO } from '../constants/actionTypes';
+import {
+  ADD_TODO,
+  TOGGLE_TODO,
+  DELETE_TODO,
+  CHANGE_TODO,
+} from '../constants/actionTypes';
 import { TodoState, Action } from '../types';
 
 export default function todos(state: TodoState = [], action: Action) {
@@ -8,8 +13,9 @@ export default function todos(state: TodoState = [], action: Action) {
         ...state,
         {
           id: action.payload.id,
-          text: action.payload.text,
-          originalColor: action.payload.color,
+          title: action.payload.title,
+          color: action.payload.color,
+          description: action.payload.description,
           completed: false,
         },
       ];
@@ -23,6 +29,15 @@ export default function todos(state: TodoState = [], action: Action) {
       });
     case DELETE_TODO:
       return state.filter(todo => todo.id !== action.payload.id);
+    case CHANGE_TODO:
+      const todosCopy = [...state];
+      const changedTodo = todosCopy.find(todo => todo.id === action.payload.id);
+      if (changedTodo) {
+        changedTodo.title = action.payload.title;
+        changedTodo.description = action.payload.description;
+        changedTodo.color = action.payload.color;
+      }
+      return todosCopy;
     default:
       return state;
   }
