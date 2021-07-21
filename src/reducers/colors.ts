@@ -1,34 +1,42 @@
 import { SELECT_COLOR } from '../constants/actionTypes';
 import { Action } from '../types';
+import {
+  amethyst,
+  burntSienna,
+  frolly,
+  malibu,
+  salomie,
+  turquoiseBlue,
+} from '../constants/colors';
 const initial_state = [
   {
     id: '0',
-    color: '#ee6a68',
+    color: burntSienna,
     active: false,
   },
   {
     id: '1',
-    color: '#f379a2',
+    color: frolly,
     active: false,
   },
   {
     id: '2',
-    color: '#9170cb',
+    color: amethyst,
     active: false,
   },
   {
     id: '3',
-    color: '#5eb3f6',
+    color: malibu,
     active: false,
   },
   {
     id: '4',
-    color: '#67d7e5',
+    color: turquoiseBlue,
     active: false,
   },
   {
     id: '5',
-    color: '#ffe083',
+    color: salomie,
     active: false,
   },
 ];
