@@ -10,8 +10,9 @@ const ColorPicker: FC<IColorPicker> = ({
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      {colors.map(color => (
+      {colors.map((color, index) => (
         <TouchableOpacity
+          key={index}
           style={dynamicStyles.color(color)}
           onPress={() => onColorPress(color)}
         />

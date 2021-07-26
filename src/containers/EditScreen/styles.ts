@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
   colorPicker: {
     position: 'absolute',
     top: 42,
-    right: '9%',
+    right: '24%',
   },
   saveButton: {
     marginLeft: 10,

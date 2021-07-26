@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { IEditScreen, ITodoItem } from '../../types';
+import { IEditScreen } from '../../types';
 import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import {
   amethyst,
@@ -11,7 +11,7 @@ import {
 } from '../../constants/colors';
 import { dynamicStyles, styles } from './styles';
 import { useDispatch } from 'react-redux';
-import { addTodo, changeTodo } from '../../actions/todoActions';
+import { asyncAddTodo, asyncChangeTodo } from '../../actions/todoActions';
 import ColorPicker from '../../components/ColorPicker';
 import SaveButton from '../../components/SaveButton';
 
@@ -20,8 +20,7 @@ const COLORS = [burntSienna, frolly, amethyst, malibu, turquoiseBlue, salomie];
 const EditScreen: FC<IEditScreen> = ({ route, navigation }) => {
   const { item, status } = route.params;
   const dispatcher = useDispatch();
-  const [state, setState] = useState<ITodoItem>({
-    id: String(item?.id ?? Date.now()),
+  const [state, setState] = useState({
     title: item?.title ?? '',
     color: item?.color ?? burntSienna,
     description: item?.description ?? '',
@@ -41,16 +40,25 @@ const EditScreen: FC<IEditScreen> = ({ route, navigation }) => {
       description: value,
     });
   };
-  const handleButtonPress = () => {
+  const handleButtonPress = async () => {
     if (status === 'new') {
-      dispatcher(
-        addTodo(state.id, state.title, state.description, state.color),
-      );
+      try {
+        dispatcher(asyncAddTodo(state));
+      } catch (e) {
+        console.log(e);
+      }
     }
     if (item && status === 'changed') {
-      dispatcher(
-        changeTodo(state.id, state.title, state.description, state.color),
-      );
+      try {
+        dispatcher(
+          asyncChangeTodo(item.id, {
+            ...state,
+            completed: item.completed,
+          }),
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
     navigation.goBack();
   };

@@ -3,3 +3,10 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const SELECT_COLOR = 'SELECT_COLOR';
 export const CHANGE_TODO = 'CHANGE_TODO';
+export const SET_TODO_LIST = 'SET_TODO_LIST';
+
+export const ASYNC_ADD_TODO = 'ASYNC_ADD_TODO';
+export const ASYNC_TOGGLE_TODO = 'ASYNC_TOGGLE_TODO';
+export const ASYNC_DELETE_TODO = 'ASYNC_DELETE_TODO';
+export const ASYNC_CHANGE_TODO = 'ASYNC_CHANGE_TODO';
+export const ASYNC_SET_TODO_LIST = 'ASYNC_SET_TODO_LIST';

@@ -3,6 +3,7 @@ import {
   TOGGLE_TODO,
   DELETE_TODO,
   CHANGE_TODO,
+  SET_TODO_LIST,
 } from '../constants/actionTypes';
 import { TodoState, Action } from '../types';
 
@@ -38,6 +39,8 @@ export default function todos(state: TodoState = [], action: Action) {
         changedTodo.color = action.payload.color;
       }
       return todosCopy;
+    case SET_TODO_LIST:
+      return action.payload;
     default:
       return state;
   }

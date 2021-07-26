@@ -1,27 +1,32 @@
 import React, { FC, useCallback } from 'react';
-import { ITodoItem, ITodoList } from '../../types';
 import { FlatList, Swipeable } from 'react-native-gesture-handler';
-import { Animated, ListRenderItem, TouchableOpacity, View } from 'react-native';
+import { Animated, ListRenderItem, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import TodoItem from '../TodoItem';
 import { styles, dynamicStyles } from './styles';
 import { alabaster } from '../../constants/colors';
 import { useDispatch } from 'react-redux';
-import { deleteTodo, toggleTodo } from '../../actions/todoActions';
+import { asyncDeleteTodo, asyncToggleTodo } from '../../actions/todoActions';
+import { ITodoItem, ITodoList } from '../../types';
 
 const TodoList: FC<ITodoList> = ({ items, onItemPress }) => {
   const dispatcher = useDispatch();
-  const renderItem: ListRenderItem<ITodoItem> = useCallback(({ item }) => {
+  const swipeRefs: Swipeable[] = [];
+  const createSwipeRef = (ref: Swipeable) => {
+    swipeRefs.push(ref);
+  };
+  const renderItem: ListRenderItem<ITodoItem> = ({ item, index }) => {
     const handlePress = () => {
       if (onItemPress) {
         onItemPress(item);
       }
     };
-    const handleItemCheck = () => {
-      dispatcher(toggleTodo(item.id));
+    const handleItemCheck = async () => {
+      dispatcher(asyncToggleTodo(item));
+      swipeRefs?.[index].close();
     };
-    const handleRemoveButtonPress = () => {
-      dispatcher(deleteTodo(item.id));
+    const handleRemoveButtonPress = async () => {
+      dispatcher(asyncDeleteTodo(item.id));
     };
 
     const RightActions = (
@@ -66,6 +71,7 @@ const TodoList: FC<ITodoList> = ({ items, onItemPress }) => {
 
     return (
       <Swipeable
+        ref={createSwipeRef}
         renderRightActions={RightActions}
         overshootRight={false}
         overshootLeft={false}
@@ -81,7 +87,7 @@ const TodoList: FC<ITodoList> = ({ items, onItemPress }) => {
         </TouchableOpacity>
       </Swipeable>
     );
-  }, []);
+  };
   const keyExtractor = useCallback((data: ITodoItem) => data.id, []);
   return (
     <FlatList
