@@ -1,27 +1,19 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import todoApp from './src/reducers';
 import { Provider } from 'react-redux';
 import Home from './src/containers/Home';
 import { createStackNavigator } from '@react-navigation/stack';
 import EditScreen from './src/containers/EditScreen';
+import rootSaga from './src/sagas';
 
 const Stack = createStackNavigator();
-
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(todoApp, applyMiddleware(sagaMiddleware));
 const App = () => {
-  const store = createStore(todoApp);
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -38,4 +30,5 @@ const App = () => {
   );
 };
 
+sagaMiddleware.run(rootSaga);
 export default App;

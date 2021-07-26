@@ -1,14 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import styles from './styles';
 import TodoList from '../../components/TodoList';
 import AddButton from '../../components/AddButton';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IHomeScreen, ITodoItem } from '../../types';
+import { asyncGetTodos } from '../../actions/todoActions';
 
 const Home: FC<IHomeScreen> = ({ navigation }) => {
+  const dispatcher = useDispatch();
+  useEffect(() => {
+    dispatcher(asyncGetTodos());
+  }, [dispatcher]);
   const data = useSelector(state => state.todos);
-  console.log(data);
   const handleButtonPress = () => {
     navigation.navigate('Edit', { status: 'new' });
   };
